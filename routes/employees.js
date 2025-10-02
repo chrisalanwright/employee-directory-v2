@@ -24,6 +24,20 @@ employeesRouter.get("/:id", (req, res) => {
   res.json(employee);
 });
 
+employeesRouter.post("/", (req, res) => {
+  const { name } = req.body;
+  if (!name) {
+    return res.status(400).json({ message: "Name is required" });
+  }
+  //This find the highest current id in the employees array.
+  const maxId = employees.length ? Math.max(...employees.map((e) => e.id)) : 0;
+  //This assins a new id that is one higher than the current max.
+  const newId = maxId + 1;
+  const newEmployee = { id: newId, name };
+  employees.push(newEmployee);
+  res.status(201).json(newEmployee);
+});
+
 //switched all .send to .json for object/array response and consistency.
 
 export default employeesRouter;
