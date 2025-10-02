@@ -25,6 +25,10 @@ employeesRouter.get("/:id", (req, res) => {
 });
 
 employeesRouter.post("/", (req, res) => {
+  //This checks if no body was sent or if the body is not an object.
+  if (!req.body || typeof req.body !== "object") {
+    return res.status(400).json({ message: "Name is required" });
+  }
   const { name } = req.body;
   if (!name) {
     return res.status(400).json({ message: "Name is required" });
